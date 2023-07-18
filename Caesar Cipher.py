@@ -4,7 +4,7 @@ substitution_ciper_a = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g
 substitution_ciper_b = {0 : 'a', 1 : 'b', 2 : 'c', 3 : 'd', 4 : 'e', 5 : 'f', 6 : 'g', 7 : 'h', 8 : 'i', 9 : 'j', 10 : 'k', 11 : 'l', 12 : 'm', 13 : 'n', 14 : 'o', 15 : 'p', 16 : 'q', 17 : 'r', 18 : 's', 19 : 't', 20 : 'u', 21 : 'v', 22 : 'w', 23 : 'x', 24 : 'y', 25 : 'z'}
 
 def get_choice():
-    choice = input("What would you like to do? (Press enter to continue) \n1. Encrypt a message \n2. Decrypt a message \n3. Crack \nEnter your choice: ")
+    choice = input("---------------------------------------------------------------\nWhat would you like to do? (Press enter to continue) \n1. Encrypt a message \n2. Decrypt a message \n3. Crack \nEnter your choice: ")
     return choice
 
 def get_message(option):
@@ -76,7 +76,7 @@ def decrypt(x, k):
 
 def crack(message):
     for i in range(26):
-        print(f"Key: {i}, Message: {' '.join(decrypt(message, i))}")
+        print(f"Key: {i}, Message: {''.join(decrypt(message, i))}")
         
 
 while True:
