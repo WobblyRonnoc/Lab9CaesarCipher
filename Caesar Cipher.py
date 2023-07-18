@@ -31,42 +31,40 @@ def get_key():
 
 # Encrypt the message(x) using key(k)
 def encrypt(x, k):
-    message_list = [*x] #? *x splits the string into a list of letters
-    encrypted_message = [] #? empty list to store the encrypted message
+    message_list = [*x] #/ *x splits the string into a list of letters
+    encrypted_message = [] # empty list to store the encrypted message
     
     for i in range(len(message_list)):
-        substituted_letter = substitution_ciper_a[message_list[i]]  #? substitute each letter in the message with the corresponding letter in the dictionary
-        Y = (substituted_letter + k) % 26 #? add the key to the substituted letter and mod 26
-        encrypted_message.append(Y) #? append the encrypted letter to the empty list
+        substituted_letter = substitution_ciper_a[message_list[i]]  # substitute each letter in the message with the corresponding letter in the dictionary
+        Y = (substituted_letter + k) % 26 # add the key to the substituted letter and mod 26
+        encrypted_message.append(Y) # append the encrypted letter to the empty list
         
-    ciper_text = [] #? empty list to store the encrypted message as letters
+    ciper_text = [] # empty list to store the encrypted message as letters
     
     for i in range(len(encrypted_message)):
         encrypted_message[i] = substitution_ciper_b[encrypted_message[i]]
         ciper_text.append(encrypted_message[i])
         
-    return ''.join(ciper_text) #? join the list of letters into a string
+    return ''.join(ciper_text) # join the list of letters into a string
 
 # Decrypt the message(x) using key(k) 
 def decrypt(x, k):
-    message_list = [*x] #? *x splits the string into a list of letters
-    decrypted_message = [] #? empty list to store the decrypted message
+    message_list = [*x] #/ *x splits the string into a list of letters
+    decrypted_message = [] # empty list to store the decrypted message
     
     for i in range(len(message_list)):
-        if message_list[i] == ' ': #? if the letter is a space,
-            #keep the space in the decrypted message
-            decrypted_message.append(message_list[i])
+        if message_list[i] == ' ': # keep the space in the decrypted message
+            decrypted_message.append(message_list[i]) 
             continue        
-        substituted_letter = substitution_ciper_a[message_list[i]]  #? substitute each letter in the message with the corresponding letter in the dictionary
-        Y = (substituted_letter - k) % 26 #? subtract the key to the substituted letter and mod 26
-        decrypted_message.append(Y) #? append the decrypted letter to the empty list
+        substituted_letter = substitution_ciper_a[message_list[i]]  # substitute each letter in the message with the corresponding letter in the dictionary
+        Y = (substituted_letter - k) % 26 # subtract the key to the substituted letter and mod 26
+        decrypted_message.append(Y) # append the decrypted letter to the empty list
         
-    plain_text = [] #? empty list to store the decrypted message as letters
+    plain_text = [] 
     
     for i in range(len(decrypted_message)):
         if decrypted_message[i] == ' ':
-            #keep the space in the decrypted message
-            plain_text.append(decrypted_message[i])
+            plain_text.append(decrypted_message[i]) # keep the space in the decrypted message
             continue
         decrypted_message[i] = substitution_ciper_b[decrypted_message[i]]
         plain_text.append(decrypted_message[i])
@@ -74,7 +72,7 @@ def decrypt(x, k):
     return plain_text 
 
 # Crack the message(x) using brute force
-# Diversity is our strength
+#! Diversity is our strength
 def crack(message):
     for i in range(26):
         print(f"Key: {i}, Message: {''.join(decrypt(message, i))}")
