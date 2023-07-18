@@ -15,7 +15,7 @@ def get_message(option):
     elif option == "3":
         message = input("Enter the message to crack: ").lower()
     else:
-        message = False
+        return None
     return message
 
 def get_key():
@@ -54,8 +54,9 @@ def decrypt(x, k):
     
     for i in range(len(message_list)):
         if message_list[i] == ' ': #? if the letter is a space,
-            continue
-        
+            #keep the space in the decrypted message
+            decrypted_message.append(message_list[i])
+            continue        
         substituted_letter = substitution_ciper_a[message_list[i]]  #? substitute each letter in the message with the corresponding letter in the dictionary
         Y = (substituted_letter - k) % 26 #? subtract the key to the substituted letter and mod 26
         decrypted_message.append(Y) #? append the decrypted letter to the empty list
@@ -63,16 +64,20 @@ def decrypt(x, k):
     plain_text = [] #? empty list to store the decrypted message as letters
     
     for i in range(len(decrypted_message)):
+        if decrypted_message[i] == ' ':
+            #keep the space in the decrypted message
+            plain_text.append(decrypted_message[i])
+            continue
         decrypted_message[i] = substitution_ciper_b[decrypted_message[i]]
         plain_text.append(decrypted_message[i])
         
     return plain_text 
 
 
-def crack():
+def crack(message):
     for i in range(26):
-        print(f"Key: {i}, Message: {' '.join(decrypt(x, i))}")
-
+        print(f"Key: {i}, Message: {' '.join(decrypt(message, i))}")
+        
 
 while True:
     choice = get_choice()
@@ -88,8 +93,8 @@ while True:
         break
     elif choice == "3":
         x = get_message(choice)
-        crack()
+        crack(x)
     else:
-        continue
+        exit(0)
 
 
