@@ -73,7 +73,8 @@ def decrypt(x, k):
         
     return plain_text 
 
-
+# Crack the message(x) using brute force
+# Diversity is our strength
 def crack(message):
     for i in range(26):
         print(f"Key: {i}, Message: {''.join(decrypt(message, i))}")
