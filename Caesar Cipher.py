@@ -91,12 +91,10 @@ while True:
         x = get_message(choice)
         k = get_key()
         print(f"Encrypted Message: {encrypt(x, k)}")
-        break
     elif choice == "2":
         x = get_message(choice)
         k = get_key()
-        print(f"Decrypted Message: {decrypt(x, k)}")
-        break
+        print(f"Decrypted Message: {''.join(decrypt(x, k))}")
     elif choice == "3":
         x = get_message(choice)
         crack(x)
