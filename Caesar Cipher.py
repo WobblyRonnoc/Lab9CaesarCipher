@@ -3,32 +3,45 @@
 substitution_ciper_a = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g' : 6, 'h' : 7, 'i' : 8, 'j' : 9, 'k' : 10, 'l' : 11, 'm' : 12, 'n' : 13, 'o' : 14, 'p' : 15, 'q' : 16, 'r' : 17, 's' : 18, 't' : 19, 'u' : 20, 'v' : 21, 'w' : 22, 'x' : 23, 'y' : 24, 'z' : 25}
 substitution_ciper_b = {0 : 'a', 1 : 'b', 2 : 'c', 3 : 'd', 4 : 'e', 5 : 'f', 6 : 'g', 7 : 'h', 8 : 'i', 9 : 'j', 10 : 'k', 11 : 'l', 12 : 'm', 13 : 'n', 14 : 'o', 15 : 'p', 16 : 'q', 17 : 'r', 18 : 's', 19 : 't', 20 : 'u', 21 : 'v', 22 : 'w', 23 : 'x', 24 : 'y', 25 : 'z'}
 
+print(f"{'-'*28}\n| Welcome to Caesar Cipher |\n{'-'*28}")
 def get_choice():
-    choice = input("---------------------------------------------------------------\nWhat would you like to do? (Press enter to continue) \n1. Encrypt a message \n2. Decrypt a message \n3. Crack \nAny other input will exit. \nEnter your choice: ")
+    try:
+        choice = input("\n1. Encrypt a message \n2. Decrypt a message \n3. Crack \n4. Exit \nEnter your choice: ")
+        if choice not in ["1", "2", "3", "4"]:
+            raise ValueError
+    except ValueError:
+        print("Invalid choice. Please enter a valid choice.")
+        return get_choice()
     return choice
 
-# returns a different message input promt depending on the choice
-def get_message(option):
-    if option == "1":
-        message = input("Enter the message to encrypt: ").lower()
-    elif option == "2":
-        message = input("Enter the message to decrypt: ").lower()
-    elif option == "3":
-        message = input("Enter the message to crack: ").lower()
-    else:
-        return None
+def get_message():
+    message = input("Enter the message to encrypt: ").lower()
     return message
 
-def get_key():
-    key = int(input("Enter the key: "))
-    while key < 0 or key > 25:
-        print("Invalid key. Please enter a number between 0 and 25")
-        key = int(input("Enter the key: "))
+def get_encrypted_message():
+    message = input("Enter the message to decrypt: ").lower()
+    return message
+
+def get_message_to_crack():
+    message = input("Enter the message to crack: ").lower()
+    return message
+
+# returns a valid key (0 - 25)
+def get_key(): 
+    while True:
+        try:
+            key = int(input("Enter the key: "))
+            if key < 0 or key > 25:
+                raise ValueError
+            else:
+                break
+        except ValueError:
+            print("Invalid key. Key must be an integer between 0 and 25.")
     return key
 
-# x = substituted message string list (each letter is an index)
-# k = each letter in the message string + key
-# y = (x+k) % 26
+#* x = substituted message string list (each letter is an index)
+#* k = each letter in the message string + key
+#* y = (x+k) % 26
 
 # Encrypt the message(x) using key(k)
 def encrypt(x, k):
@@ -78,27 +91,39 @@ def decrypt(x, k):
     return plain_text 
 
 # Crack the message(x) using brute force
-#! Diversity is our strength
+#! QVIREFVGL ZJ DJG LMKXGZMA
+#! diversity is our strength
 def crack(message):
+    m_length = len(message)
+    print("\nCracking the message...\n")
+    print(f"{'DECRYPTED MESSAGE'.center(m_length,'=')} | KEY")
     for i in range(26):
-        print(f"Key: {i}, Message: {''.join(decrypt(message, i))}")
-        
+        print(f"{''.join(decrypt(message, i))} | {i}")
+
+# Print the result 
+# accept a string as an argument
+def print_result(title, result_string):
+    border = '-' * (len(result_string) + 3) # create a border of dashes adjusting for the length of the string
+    print(f"\n{title}\n{border}\n| {result_string} |\n{border}") # print the result string with a border
+
 
 # Main program
 while True:
     choice = get_choice()
     if choice == "1":
-        x = get_message(choice)
+        x = get_message()
         k = get_key()
-        print(f"Encrypted Message: {encrypt(x, k)}")
+        print_result("Encrypted Message", encrypt(x, k))
     elif choice == "2":
-        x = get_message(choice)
+        x = get_encrypted_message()
         k = get_key()
-        print(f"Decrypted Message: {''.join(decrypt(x, k))}")
+        print_result(f"Decrypted Message", ''.join(decrypt(x, k)))
     elif choice == "3":
-        x = get_message(choice)
+        x = get_message_to_crack()
         crack(x)
     else:
+        # any other choice, exit the program
+        print("Goodbye!")
         exit(0)
 
 
